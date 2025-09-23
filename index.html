@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Career 2 Game</title>
-    </head>
-    <body>
-        <h1>RESTARAUNT OWNER SIMULATION</h1>
-        <h1>Day {{ day }}</h1>
-        <p>Money: {{ money }}%/100</p>
-        <p>Customer Satisfation: {{ customer_satisfaction }}%/100%</p>
+<head>
+    <title>Business Manager Game</title>
+</head>
+<body>
+    <h1>Day {{ day }}</h1>
 
-        <form action="/action" method="post">
-        <button type="submit">Give Raise</button>
-        </form>
-    </body>
+    <p><b>Money:</b> {{ money }}/100</p>
+    <p><b>Employee Happiness:</b> {{ employee_happiness }}/100</p>
+    <p><b>Customer Satisfaction:</b> {{ customer_satisfaction }}/100</p>
+
+    <h2>{{ event }}</h2>
+
+    <form action="/action/choice1" method="POST">
+        <button type="submit">{{ choice1 }}</button>
+    </form>
+
+    <form action="/action/choice2" method="POST">
+        <button type="submit">{{ choice2 }}</button>
+    </form>
+</body>
 </html>
 
