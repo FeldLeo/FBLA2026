@@ -10,7 +10,7 @@ employee_happiness=50
 
 decisions = [
     {
-        "event": "An employee asks for a raise.",
+        "event": "An employee asks for a raise.", # "event" is a label, not a string. Each event should be called "event," not "event1" or whatever else.
         "choice1": {
             "text": "Give raise",
             "effects": {
@@ -28,6 +28,26 @@ decisions = [
             }
         }
     }
+
+    {
+        "event": "Customer is upset about a rude employee.",
+        "choice1": {
+            "text": "Ignore complaint",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -10
+            }
+        },
+        "choice2": {
+            "text": "Fire employee",
+            "effects": {
+                "money": 0,
+                "employee_happiness": -10,
+                "customer_satisfaction": 0
+            }
+        }
+            
 ]
 
 current_event = random.choice(decisions)
@@ -72,3 +92,4 @@ def action(choice):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
