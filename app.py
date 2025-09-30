@@ -10,7 +10,7 @@ employee_happiness=50
 
 decisions = [
     {
-        "event": "An employee asks for a raise.", # "event" is a label, not a string. Each event should be called "event," not "event1" or whatever else.
+        "event": "An employee asks for a raise.",
         "choice1": {
             "text": "Give raise",
             "effects": {
@@ -27,7 +27,7 @@ decisions = [
                 "customer_satisfaction": 0
             }
         }
-    }
+    },
 
     {
         "event": "Customer is upset about a rude employee.",
@@ -46,7 +46,159 @@ decisions = [
                 "employee_happiness": -10,
                 "customer_satisfaction": 0
             }
+    }
+    {
+        "event": "Hire more employees for better efficiency?",
+        "choice1": {
+            "text": "Hire Employees"
+            "effects": {
+                "money": -14,
+                "employee_happiness": 0,
+                "customer_satisfaction": +11
+                }
+            },
+        "choice2": {
+            "text": "Don't hire employees"
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": 0
+                }
+            }
+    },
+    {
+        "event": "Charity requests fundraiser where all proceeds on Tuesday night goes to charity.",
+        "choice1": {
+            "text": "Accept fundraiser", 
+            "effects": {
+                "money": -10,              
+                "employee_happiness": 0, 
+                "customer_satisfaction": +14
+            }
+        },
+        "choice2": {
+            "text": "Decline fundraiser",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -8
+            }
         }
+    },
+    {
+        "event": "Ice cream machine breaks.",
+        "choice1": {
+            "text": "Buy new machine", 
+            "effects": {
+                "money": -11,
+                "employee_happiness": 0,
+                "customer_satisfaction": 0
+            }
+        },
+        "choice2": {
+            "text": "Wait for more money and go without a machine for now",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -12
+            }
+        }
+    },
+    {
+        "event": "Owner wants to meet with you, but it conflicts with an employee’s birthday party.", 
+        "choice1": { 
+            "text": "Meet with owner",  
+            "effects": { 
+                "money": +15, 
+                "employee_happiness": -8, 
+                "customer_satisfaction": 0 
+            } 
+        }, 
+        "choice2": { 
+            "text": "Attend employee party", 
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": +11, 
+                "customer_satisfaction": 0 
+            } 
+        } 
+    }, 
+        {
+        "event": "Good employee gets big tip.", 
+        "choice1": { 
+            "text": "Praise employee",  
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": +9, 
+                "customer_satisfaction": 0 
+            } 
+        }, 
+        "choice2": { 
+            "text": "Give employee a raise", 
+            "effects": { 
+                "money": -6, 
+                "employee_happiness": +15, 
+                "customer_satisfaction": 0 
+            } 
+        } 
+    }, 
+        {
+        "event": "Customer accidentally breaks soda machine.", 
+        "choice1": { 
+            "text": "Demand customer pays for it",  
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": 0, 
+                "customer_satisfaction": -9 
+            } 
+        }, 
+        "choice2": { 
+            "text": "Forgive customer", 
+            "effects": { 
+                "money": -12, 
+                "employee_happiness": 0, 
+                "customer_satisfaction": +6 
+            } 
+        } 
+    }, 
+        {
+        "event": "", 
+        "choice1": { 
+            "text": "",  
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": 0, 
+                "customer_satisfaction": 0 
+            } 
+        }, 
+        "choice2": { 
+            "text": "", 
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": 0, 
+                "customer_satisfaction": 0 
+            } 
+        } 
+    }, 
+        {
+        "event": "", 
+        "choice1": { 
+            "text": "",  
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": 0, 
+                "customer_satisfaction": 0 
+            } 
+        }, 
+        "choice2": { 
+            "text": "", 
+            "effects": { 
+                "money": 0, 
+                "employee_happiness": 0, 
+                "customer_satisfaction": 0 
+            } 
+        } 
+    }, 
             
 ]
 
@@ -92,4 +244,5 @@ def action(choice):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
