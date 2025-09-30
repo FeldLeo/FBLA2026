@@ -153,53 +153,150 @@ decisions = [
             } 
         }, 
         "choice2": { 
-            "text": "Forgive customer", 
+            "text": "Forgive customer and foot the bill", 
             "effects": { 
                 "money": -12, 
                 "employee_happiness": 0, 
                 "customer_satisfaction": +6 
             } 
         } 
-    }, 
+    },
         {
-        "event": "", 
-        "choice1": { 
-            "text": "",  
-            "effects": { 
-                "money": 0, 
-                "employee_happiness": 0, 
-                "customer_satisfaction": 0 
-            } 
-        }, 
-        "choice2": { 
-            "text": "", 
-            "effects": { 
-                "money": 0, 
-                "employee_happiness": 0, 
-                "customer_satisfaction": 0 
-            } 
-        } 
-    }, 
-        {
-        "event": "", 
-        "choice1": { 
-            "text": "",  
-            "effects": { 
-                "money": 0, 
-                "employee_happiness": 0, 
-                "customer_satisfaction": 0 
-            } 
-        }, 
-        "choice2": { 
-            "text": "", 
-            "effects": { 
-                "money": 0, 
-                "employee_happiness": 0, 
-                "customer_satisfaction": 0 
-            } 
-        } 
-    }, 
-            
+        "event": "Customer suggests new menu item.",
+        "choice1": {
+            "text": "Add it to the menu.",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": +14
+            }
+        },
+
+        "choice2": {
+            "text": "Ignore the suggestion.",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -10
+            }
+        }
+    },
+    {
+        "event": "Customer posts positive review online.",
+
+        "choice1": {
+            "text": "Okay.",  # label for the first button
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": +9
+            }
+        }
+    },
+    {
+        "event": "A customer can't pay for their food.",
+
+        "choice1": {
+            "text": "Make him work off his meal.",
+            "effects": {
+                "money": +12,
+                "employee_happiness": 0,
+                "customer_satisfaction": -13
+            }
+        },
+
+        "choice2": {
+            "text": "Let it slide.",
+            "effects": {
+                "money": -7,
+                "employee_happiness": 0,
+                "customer_satisfaction": 0
+            }
+        }
+    },
+    {
+        "event": "Employee is late for work.",
+
+        "choice1": {
+            "text": "Punish him.",
+            "effects": {
+                "money": 0,
+                "employee_happiness": -10,
+                "customer_satisfaction": 0
+            }
+        },
+
+        "choice2": {
+            "text": "Let it slide.",
+            "effects": {
+                "money": 0,
+                "employee_happiness": +9,
+                "customer_satisfaction": -6
+            }
+        }
+    },
+    {
+        "event": "New health codes enforced.",
+
+        "choice1": {
+            "text": "Pay to follow regulations.",
+            "effects": {
+                "money": -15,
+                "employee_happiness": 0,
+                "customer_satisfaction": 0
+            }
+        },
+
+        "choice2": {
+            "text": "Ignore it.",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -13
+            }
+        }
+    },
+    {
+        "event": "Rival business steals customers.",
+
+        "choice1": {
+            "text": "Run a new advertising campaign.",
+            "effects": {
+                "money": -14,
+                "employee_happiness": 0,
+                "customer_satisfaction": +10
+            }
+        },
+
+        "choice2": {
+            "text": "Ignore the competition",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -12
+            }
+        }
+    },
+    {
+        "event": "Employee gets injured outside of work.",
+        "choice1": {
+            "text": "Hire another employee.",
+            "effects": {
+                "money": -12,
+                "employee_happiness": 0,
+                "customer_satisfaction": 0
+            }
+        },
+
+        "choice2": {
+            "text": "Wait until he returns.",
+            "effects": {
+                "money": 0,
+                "employee_happiness": 0,
+                "customer_satisfaction": -10
+            }
+        }
+    }          
 ]
 
 current_event = random.choice(decisions)
@@ -244,5 +341,6 @@ def action(choice):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
