@@ -299,14 +299,11 @@ decisions = [
     }          
 ]
 
+# Pick an initial event
 current_event = random.choice(decisions)
-
-
-
 
 @app.route('/')
 def home():
-    print(">>> Rendering index.html")
     return render_template(
         'index.html',
         day=day,
@@ -315,7 +312,7 @@ def home():
         customer_satisfaction=customer_satisfaction,
         event=current_event["event"],
         choice1=current_event["choice1"]["text"],
-        choice2=current_event["choice2"]["text"],
+        choice2=current_event["choice2"]["text"]
     )
 
 @app.route('/action/<choice>', methods=['POST'])
@@ -329,18 +326,16 @@ def action(choice):
     employee_happiness += effects["employee_happiness"]
     customer_satisfaction += effects["customer_satisfaction"]
 
-   
-    money = max(0, min(money, 100)) # keeps values from going below 0 or over 100
+    # Keep values between 0–100
+    money = max(0, min(money, 100))
     customer_satisfaction = max(0, min(customer_satisfaction, 100))
     employee_happiness = max(0, min(employee_happiness, 100))
 
-    return redirect(url_for('home'))  # reloads home page with updated values
-    
+    # Increment day and pick a new event
     day += 1
     current_event = random.choice(decisions)
 
+    return redirect(url_for('home'))  # reloads home page
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
