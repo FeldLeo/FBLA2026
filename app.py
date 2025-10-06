@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for
 import random
 
@@ -46,11 +47,12 @@ decisions = [
                 "employee_happiness": -10,
                 "customer_satisfaction": 0
             }
-    }
+        }
+    },
     {
         "event": "Hire more employees for better efficiency?",
         "choice1": {
-            "text": "Hire Employees"
+            "text": "Hire Employees",
             "effects": {
                 "money": -14,
                 "employee_happiness": 0,
@@ -58,7 +60,7 @@ decisions = [
                 }
             },
         "choice2": {
-            "text": "Don't hire employees"
+            "text": "Don't hire employees",
             "effects": {
                 "money": 0,
                 "employee_happiness": 0,
@@ -303,6 +305,7 @@ decisions = [
 current_event = random.choice(decisions)
 
 @app.route('/')
+@app.route('/')
 def home():
     return render_template(
         'index.html',
@@ -310,18 +313,20 @@ def home():
         money=money,
         employee_happiness=employee_happiness,
         customer_satisfaction=customer_satisfaction,
-        event=current_event["event"],
-        choice1=current_event["choice1"]["text"],
-        choice2=current_event["choice2"]["text"]
+        event=current_event  # pass entire dict
     )
+
+# --- globals at the top ---
+unused_events = random.sample(decisions, len(decisions))  # shuffled copy
+current_event = unused_events.pop()  # first event
+
 
 @app.route('/action/<choice>', methods=['POST'])
 def action(choice):
-    global day, money, employee_happiness, customer_satisfaction, current_event
-
-    effects = current_event[choice]["effects"]
+    global day, money, employee_happiness, customer_satisfaction, current_event, unused_events
 
     # Apply effects
+    effects = current_event[choice]["effects"]
     money += effects["money"]
     employee_happiness += effects["employee_happiness"]
     customer_satisfaction += effects["customer_satisfaction"]
@@ -331,11 +336,69 @@ def action(choice):
     customer_satisfaction = max(0, min(customer_satisfaction, 100))
     employee_happiness = max(0, min(employee_happiness, 100))
 
-    # Increment day and pick a new event
+    # Increment day
     day += 1
-    current_event = random.choice(decisions)
 
-    return redirect(url_for('home'))  # reloads home page
+    # Daily income
+    avg = (customer_satisfaction + employee_happiness) // 2
+    daily_income = avg // 10
+    money += daily_income
+
+    if day > 28 or money == 0 or customer_satisfaction == 0 or employee_happiness == 0 or not unused_events:
+        return render_template(
+            'game_over.html',
+            day=day,
+            money=money,
+            employee_happiness=employee_happiness,
+            customer_satisfaction=customer_satisfaction
+        )
+    # Otherwise, grab next event (no repeats)
+    if unused_events:
+        current_event = unused_events.pop()
+    else:
+        # If we somehow run out of events early, end game
+        return render_template(
+            'game_over.html',
+            day=day,
+            money=money,
+            employee_happiness=employee_happiness,
+            customer_satisfaction=customer_satisfaction
+        )
+
+    return redirect(url_for('home'))
+        # Game over check (add this right after daily income)
+    if day > 28 or money == 0 or customer_satisfaction == 0 or employee_happiness == 0:
+        avg_score = (money + customer_satisfaction + employee_happiness) / 3
+
+        if avg_score >= 80:
+            ending = "great"
+        elif avg_score >= 50:
+            ending = "ok"
+        elif avg_score >= 30:
+            ending = "no_improvement"
+        else:
+            ending = "terrible"
+
+        return render_template(
+            'game_over.html',
+            day=day,
+            money=money,
+            employee_happiness=employee_happiness,
+            customer_satisfaction=customer_satisfaction,
+            ending=ending
+        )
+@app.route('/reset', methods=['POST'])
+def reset():
+    global day, money, employee_happiness, customer_satisfaction, unused_events, current_event
+    day = 1
+    money = 50
+    employee_happiness = 50
+    customer_satisfaction = 50
+    unused_events = random.sample(decisions, len(decisions))
+    current_event = unused_events.pop()
+    return redirect(url_for('home'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
