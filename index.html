@@ -1,24 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Business Manager Game</title>
+    <meta charset="UTF-8">
+    <title>Restaurant Simulator</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #ffe29f, #ffa99f, #ff719a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #333;
+            text-align: center;
+            padding: 40px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #222;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .progress-container {
+            background: #ddd;
+            border-radius: 10px;
+            height: 15px;
+            margin-top: 5px;
+            width: 150px;
+        }
+
+        .progress {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .money { background: #ffd700; }
+        .happiness { background: #76e0a2; }
+        .satisfaction { background: #76a8e0; }
+
+        .event-box {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 40px auto;
+            width: 60%;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            margin: 12px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            background-color: #ccc;
+            margin: 20px auto;
+            width: 70%;
+        }
+    </style>
 </head>
+
 <body>
     <h1>Day {{ day }}</h1>
 
-    <p><b>Money:</b> {{ money }}/100</p>
-    <p><b>Employee Happiness:</b> {{ employee_happiness }}/100</p>
-    <p><b>Customer Satisfaction:</b> {{ customer_satisfaction }}/100</p>
+    <div class="stats">
+        <div class="stat">
+            <strong>Money:</strong> {{ money }}
+            <div class="progress-container">
+                <div class="progress money" style="width: {{ money }}%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <strong>Employee Happiness:</strong> {{ employee_happiness }}
+            <div class="progress-container">
+                <div class="progress happiness" style="width: {{ employee_happiness }}%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <strong>Customer Satisfaction:</strong> {{ customer_satisfaction }}
+            <div class="progress-container">
+                <div class="progress satisfaction" style="width: {{ customer_satisfaction }}%;"></div>
+            </div>
+        </div>
+    </div>
 
-    <h2>{{ event }}</h2>
+    <div class="event-box">
+        <h2>Event:</h2>
+        <p>{{ event.event }}</p>
 
-    <form action="/action/choice1" method="POST">
-        <button type="submit">{{ choice1 }}</button>
-    </form>
+        <form action="{{ url_for('action', choice='choice1') }}" method="post">
+            <button type="submit">{{ event.choice1.text }}</button>
+        </form>
 
-    <form action="/action/choice2" method="POST">
-        <button type="submit">{{ choice2 }}</button>
-    </form>
+        {% if event.choice2 %}
+        <form action="{{ url_for('action', choice='choice2') }}" method="post">
+            <button type="submit">{{ event.choice2.text }}</button>
+        </form>
+        {% endif %}
+    </div>
 </body>
 </html>
-
