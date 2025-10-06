@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Over</title>
+</head>
+<body>
+    <h1>Game Over!</h1>
+    <p>You made it to Day {{ day }}</p>
+    <p>Money: {{ money }}</p>
+    <p>Employee Happiness: {{ employee_happiness }}</p>
+    <p>Customer Satisfaction: {{ customer_satisfaction }}</p>
+
+    <hr>
+
+    {% if ending == "great" %}
+        <h2>Congrats!</h2>
+        <p>Your restaurant became the most beloved spot in town. Employees are happy, customers are loyal, and profits are soaring!</p>
+
+    {% elif ending == "ok" %}
+        <h2>Well done</h2>
+        <p>Your restaurant is doing fine — not perfect, but stable. There’s room for growth, but you made it through the month.</p>
+
+    {% elif ending == "no_improvement" %}
+        <h2>Nice try</h2>
+        <p>You kept things afloat, but nothing really changed. Customers and staff aren’t happy — maybe next time!</p>
+
+    {% else %}
+        <h2>You will need to make some major changes</h2>
+        <p>The restaurant’s gone under. Staff quit, customers left bad reviews, and you’re deep in debt. Better luck next time!</p>
+    {% endif %}
+
+    <form action="{{ url_for('reset') }}" method="post">
+        <button type="submit">Play Again</button>
+    </form>
+</body>
+</html>
